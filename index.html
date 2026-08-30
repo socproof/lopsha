@@ -1,0 +1,381 @@
+<title>Lopsha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:   #eef1f5;
+    --surface:  #f8fafc;
+    --ink:      #141b24;
+    --ink-soft: #5d6b7b;
+    --ink-faint:#8794a3;
+    --line:     #d4dce5;
+    --accent:   #2d6b91;
+    --halo:     rgba(45,107,145,.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #0c1117;
+      --surface:  #121a22;
+      --ink:      #e4ebf3;
+      --ink-soft: #8c9aab;
+      --ink-faint:#68757f;
+      --line:     #222c37;
+      --accent:   #92c0dd;
+      --halo:     rgba(146,192,221,.10);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:   #0c1117;
+    --surface:  #121a22;
+    --ink:      #e4ebf3;
+    --ink-soft: #8c9aab;
+    --ink-faint:#68757f;
+    --line:     #222c37;
+    --accent:   #92c0dd;
+    --halo:     rgba(146,192,221,.10);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 2rem) 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.75rem, 6vw, 4.25rem);
+  }
+
+  .label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .6875rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---- masthead ---- */
+  .masthead { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .name {
+    font-family: "Bodoni Moda", Didot, "Bodoni MT", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3.75rem, 15vw, 7.5rem);
+    line-height: .92;
+    letter-spacing: -.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .bio {
+    font-size: clamp(1.0625rem, 2.4vw, 1.1875rem);
+    color: var(--ink-soft);
+    max-width: 34ch;
+    margin: 0;
+  }
+  .bio strong { color: var(--ink); font-weight: 500; }
+
+  .rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+  /* ---- contact ---- */
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 2.5rem;
+    align-items: baseline;
+  }
+  .contact dl { display: flex; flex-direction: column; gap: .3rem; margin: 0; }
+  .contact dd { margin: 0; font-size: 1rem; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .mail {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .9375rem;
+  }
+
+  /* ---- discography ---- */
+  section { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .heading {
+    font-family: "Bodoni Moda", Didot, Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .releases { display: flex; flex-direction: column; }
+
+  .release {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .2rem 1.5rem;
+    padding: 1.05rem 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .release:last-child { border-bottom: 1px solid var(--line); }
+
+  .release-title {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .release-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem .9rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .75rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .release-meta .with { color: var(--ink-soft); }
+
+  .kind {
+    justify-self: end;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .6875rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--halo);
+    padding: .18rem .5rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .listen { font-size: .8125rem; font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+  /* ---- credits ---- */
+  .credits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: .5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--ink-soft);
+  }
+
+  footer {
+    color: var(--ink-faint);
+    font-size: .8125rem;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  @media (max-width: 30rem) {
+    .release { grid-template-columns: 1fr; }
+    .kind { justify-self: start; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <p class="label">Official artist page</p>
+    <h1 class="name">Lopsha</h1>
+    <p class="bio">Instrumental music between electronic composition and classical guitar. The project of <strong>Aleksei Prokhorov</strong>.</p>
+  </header>
+
+  <hr class="rule">
+
+  <div class="contact">
+    <dl>
+      <dt class="label">Contact</dt>
+      <dd><a class="mail" href="mailto:lyda.prokh@gmail.com">lyda.prokh@gmail.com</a></dd>
+    </dl>
+    <dl>
+      <dt class="label">Distribution</dt>
+      <dd>Too&nbsp;Lost LLC</dd>
+    </dl>
+    <dl>
+      <dt class="label">Catalog</dt>
+      <dd>14 releases, 2026</dd>
+    </dl>
+  </div>
+
+  <section>
+    <h2 class="heading">Releases</h2>
+    <div class="releases">
+
+      <article class="release">
+        <h3 class="release-title">Music of Open Doors</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>5 Sep 2026</span>
+          <span>UPC 0682286992424</span>
+          <span class="with">with Aleksei Prokhorov, Ilya Podoynitsyn</span>
+          <a class="listen" href="https://too.fm/yk15dlr">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Kaldt Skrekk</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>30 Aug 2026</span>
+          <span>UPC 0682286807414</span>
+          <a class="listen" href="https://too.fm/bvbmd5p">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Grey Cathedral</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>30 Aug 2026</span>
+          <span>UPC 0682286807155</span>
+          <a class="listen" href="https://too.fm/9eaqvmx">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Where Grief Goes Quiet</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>30 Aug 2026</span>
+          <span>UPC 0682286806158</span>
+          <a class="listen" href="https://too.fm/rjzp13z">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Nocturnal Static</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>25 Aug 2026</span>
+          <span>UPC 0682286696544</span>
+          <a class="listen" href="https://too.fm/8exq36j">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">The Malachite Casket</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811963</span>
+          <span class="with">with Aleksei Prokhorov</span>
+          <a class="listen" href="https://too.fm/bkyjo6q">Listen</a>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">The Legend of Don Quixote</h3>
+        <span class="kind">EP</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811932</span>
+          <span class="with">with Aleksei Prokhorov</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Guitar Sonatas</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811901</span>
+          <span class="with">with Aleksei Prokhorov</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Retro Suite</h3>
+        <span class="kind">EP</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811857</span>
+          <span class="with">with Aleksei Prokhorov</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Concerto for Two Guitars and Orchestra</h3>
+        <span class="kind">Single</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811802</span>
+          <span class="with">with Aleksei Prokhorov, Gleb Chechin</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Seven Dwarfs and One More</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>10 Jul 2026</span>
+          <span>UPC 0672896811710</span>
+          <span class="with">with Aleksei Prokhorov</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Crystal ship</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>8 Jul 2026</span>
+          <span>UPC 0672896801674</span>
+          <span class="with">with Crystal ship</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">Pyatnashka&rsquo;s Yard</h3>
+        <span class="kind">EP</span>
+        <p class="release-meta">
+          <span>8 Jul 2026</span>
+          <span>UPC 0672896801551</span>
+        </p>
+      </article>
+
+      <article class="release">
+        <h3 class="release-title">A Million Gold Original</h3>
+        <span class="kind">Album</span>
+        <p class="release-meta">
+          <span>8 Jul 2026</span>
+          <span>UPC 0672896801377</span>
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="heading">Collaborators</h2>
+    <ul class="credits">
+      <li>Aleksei Prokhorov &mdash; guitar</li>
+      <li>Gleb Chechin</li>
+      <li>Ilya Podoynitsyn</li>
+      <li>Crystal ship</li>
+      <li>Night Shift</li>
+    </ul>
+  </section>
+
+  <hr class="rule">
+
+  <footer>
+    <p>All recordings released 2026. All rights held by the artist.</p>
+    <p>Business and licensing enquiries: <a class="mail" href="mailto:lyda.prokh@gmail.com">lyda.prokh@gmail.com</a></p>
+  </footer>
+
+</div>
